@@ -6,8 +6,8 @@ public class Player extends GameObject {
 
     public Player() {
         super(new ObjCoordinates(100, 100), ID.Player);
-        velX = 3;
-        velY = 3;
+        velX = 0;
+        velY = 0;
     }
 
     public Player(ObjCoordinates coordinates) {

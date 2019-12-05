@@ -8,13 +8,10 @@ public class Game extends Canvas implements Runnable {
     private boolean running;
 
     private Window window;
-    private Handler handler;
+    private ObjHandler objHandler;
 
     private int WIDTH;
     private int HEIGHT;
-
-    //for small debug screen
-    private boolean smallScreen;
 
     //constructor
 
@@ -22,26 +19,27 @@ public class Game extends Canvas implements Runnable {
     public Game() {
         WIDTH = 800;
         HEIGHT = (WIDTH / 12) * 9;
-        handler = new Handler();
+        objHandler = new ObjHandler();
+
         Random r = new Random();
         window = new Window(WIDTH, HEIGHT, "MyFirstGame", this);
         GameObject.assignStaticVars(new int[]{window.getWIDTH(), window.getHEIGHT()});
 
+        objHandler.addObject(new Player());
         for (int i = 0; i < 10; i++) {
             int w = r.nextInt(WIDTH);
             int h = r.nextInt(HEIGHT);
-            handler.addObject(new Player());
-            handler.addObject(new Drunkard(new ObjCoordinates(w, h)));
-//            handler.addObject(new Player(10, 14));
-//            handler.addObject(new Player(60, 32));
+            objHandler.addObject(new Drunkard(new ObjCoordinates(w, h)));
         }
-        smallScreen = true;
+
+        this.addKeyListener(new KeyInput(objHandler));
     }
 
 
     //fullscreen
     public Game(boolean fullScreen) {
-        handler = new Handler();
+        objHandler = new ObjHandler();
+        this.addKeyListener(new KeyInput(objHandler));
         Random r = new Random();
         window = new Window("MyFirstGame", this);
         GameObject.assignStaticVars(new int[]{window.getWIDTH(), window.getHEIGHT()});
@@ -49,13 +47,13 @@ public class Game extends Canvas implements Runnable {
         WIDTH = window.getWIDTH();
         HEIGHT = window.getHEIGHT();
 
+        objHandler.addObject(new Player());
         for (int i = 0; i < 20; i++) {
             int w = r.nextInt(WIDTH);
             int h = r.nextInt(HEIGHT);
-            handler.addObject(new Player(new ObjCoordinates(w, h)));
-//            handler.addObject(new Player(10, 14));
-//            handler.addObject(new Player(60, 32));
+            objHandler.addObject(new Drunkard(new ObjCoordinates(w, h)));
         }
+        this.addKeyListener(new KeyInput(objHandler));
     }
 
     //methods
@@ -104,7 +102,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void tick() {
-        handler.tick();
+        objHandler.tick();
     }
 
     private void render() {
@@ -118,7 +116,7 @@ public class Game extends Canvas implements Runnable {
 
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
-        handler.render(g);
+        objHandler.render(g);
 
         g.dispose();
         bs.show();

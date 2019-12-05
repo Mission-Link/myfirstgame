@@ -30,6 +30,11 @@ public abstract class GameObject {
 
     public abstract void render(Graphics g);
 
+    public void changeVelocity(int newVelX,int newVelY){
+        velX = newVelX;
+        velY = newVelY;
+    }
+
     public void changePosition(int newX, int newY) {
         coordinates.setX(newX);
         coordinates.setY(newY);
