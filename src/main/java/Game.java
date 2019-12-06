@@ -33,6 +33,7 @@ public class Game extends Canvas implements Runnable {
         }
 
         this.addKeyListener(new KeyInput(objHandler));
+        this.requestFocus();
     }
 
 
@@ -54,23 +55,24 @@ public class Game extends Canvas implements Runnable {
             objHandler.addObject(new Drunkard(new ObjCoordinates(w, h)));
         }
         this.addKeyListener(new KeyInput(objHandler));
+        this.requestFocus();
     }
 
     //methods
 
     public synchronized void start() {
-        thread = new Thread(this);
-        thread.start();
+//        thread = new Thread(this);
+//        thread.start();
         running = true;
     }
 
     public synchronized void stop() {
         try {
             thread.join();
-            running = false;
         } catch (Exception e) {
             System.out.println("Impossible to stop");
         }
+        running = false;
     }
 
     public void run() {

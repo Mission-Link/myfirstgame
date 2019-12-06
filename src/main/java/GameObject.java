@@ -2,20 +2,28 @@ import java.awt.*;
 
 public abstract class GameObject {
 
-    protected ObjCoordinates coordinates;
-    protected ID id;
-
-    protected int velX;
-    protected int velY;
-
     protected static int screenWidth;
     protected static int screenHeight;
+
+    protected static int rightSide;
+    protected static int leftSide = 0;
+    protected static int topSide = 0;
+    protected static int bottomSide;
 
 
     public static void assignStaticVars(int[] sizes){
         screenWidth = sizes[0];
         screenHeight = sizes[1];
+
+        rightSide = screenWidth - 40;
+        bottomSide = screenHeight - 62;
     }
+
+    protected ObjCoordinates coordinates;
+    protected ID id;
+
+    protected int velX;
+    protected int velY;
 
     //constructor
 
@@ -30,7 +38,7 @@ public abstract class GameObject {
 
     public abstract void render(Graphics g);
 
-    public void changeVelocity(int newVelX,int newVelY){
+    public void changeVelocity(int newVelX, int newVelY){
         velX = newVelX;
         velY = newVelY;
     }
@@ -50,21 +58,41 @@ public abstract class GameObject {
 
     //with wide frames
     public void keepInBoundaries2() {
-        if ((getX() > screenWidth - 48) || (getX() < 0)) {
+        if ((getX() > rightSide) || (getX() < leftSide)) {
             velX *= -1;
-        } else if ((getY() > screenHeight - 62) || (getY() < 0)) {
+        } else if ((getY() > bottomSide) || (getY() < topSide)) {
             velY *= -1;
         }
-    }
+        else if((getX() > rightSide) && (getY() > bottomSide)){
+            velX *= -1;
+            velY *= -1;
+        }
+        else if((getX() < leftSide) && (getY() < topSide)){
+            velX *= -1;
+            velY *= -1;
+        }
+    }//end of keepInBoundaries2 method
+
+//    public void keepInBoundaries2() {
+//        if ((getX() > screenWidth - 48) || (getX() < 0)) {
+//            velX *= -1;
+//        } else if ((getY() > screenHeight - 62) || (getY() < 0)) {
+//            velY *= -1;
+//        }
+//    }
 
     //getters & setters
 
-    public ObjCoordinates getCoordinates() {
-        return coordinates;
+    public int getVelX() {
+        return velX;
     }
 
-    public void setCoordinates(ObjCoordinates coordinates) {
-        this.coordinates = coordinates;
+    public int getVelY() {
+        return velY;
+    }
+
+    public ObjCoordinates getCoordinates() {
+        return coordinates;
     }
 
     /*

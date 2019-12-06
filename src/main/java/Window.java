@@ -27,7 +27,6 @@ public class Window extends Canvas {
         frame.setLocationRelativeTo(null);
         frame.add(game);
         frame.setVisible(true);
-        frame.requestFocus();
         game.start();
     }
 
@@ -45,9 +44,7 @@ public class Window extends Canvas {
         frame.setLocationRelativeTo(null);
         frame.add(game);
         frame.setVisible(true);
-        frame.requestFocus();
         game.start();
-//        game.run();
     }
 
     //getters
